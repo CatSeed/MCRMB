@@ -1,0 +1,29 @@
+# Compiled class and jar files
+/build/
+/out/
+
+# Gradle-specific files
+.gradle/
+build/
+
+# IDE-specific files
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Logs and databases
+logs/
+*.log
+*.sql
+*.sqlite
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Miscellaneous
+Thumbs.db
+.DS_Store

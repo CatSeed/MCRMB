@@ -1,0 +1,11 @@
+name: Mcrmb
+version: 1.1.0
+main: com.mcrmb.Mcrmb
+softdepend: [ ]
+commands:
+  b:
+    description: "MCRMB插件，欢迎访问 http://www.mcrmb.com"
+    usage: "<command> <命令>"
+  badmin:
+    description: "此指令已经改为 /b admin"
+    usage: "<command> <命令>"
