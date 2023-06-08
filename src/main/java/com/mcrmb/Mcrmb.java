@@ -43,7 +43,6 @@ public class Mcrmb extends JavaPlugin {
             loggerSevere("插件无法连接接口，请检查服务器是否能访问 www.mcrmb.com。对于面板服问题，请向您的服务商咨询。");
         }
 
-        getLogger().info("本地配置文件已载入，请访问 www.mcrmb.com 查看说明。");
         getCardTypes();
         balances = new HashMap<>();
 
@@ -58,9 +57,7 @@ public class Mcrmb extends JavaPlugin {
         }
 
         if (Config.opModify()) {
-            loggerInfo("■■■■■■■■■■■■■■■■");
             loggerInfo("服务器指令操作玩家点券：已开启");
-            loggerInfo("■■■■■■■■■■■■■■■■");
         }
 
 

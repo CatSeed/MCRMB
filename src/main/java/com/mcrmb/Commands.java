@@ -151,9 +151,7 @@ public class Commands {
                 if (args[1].equalsIgnoreCase("reload")) {
                     Config.reloadConfig();
                     if (Config.opModify()) {
-                        Mcrmb.loggerInfo("■■■■■■■■■■■■■■■■");
                         Mcrmb.loggerInfo("服务器指令操作玩家点券：已开启");
-                        Mcrmb.loggerInfo("■■■■■■■■■■■■■■■■");
                     }
                     sender.sendMessage("[MCRMB] 已经重新载入配置!");
                     Mcrmb.loggerInfo("已经重新载入配置!");
@@ -177,9 +175,9 @@ public class Commands {
                                 @Override
                                 public void run() {
                                     String reason = sender.getName() + "扣款" + amount;
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
                                     sender.sendMessage(Config.prefix() + "扣款操作已执行，扣款返回结果：" + PayApi.manual(targetPlayer, 2, amount, reason));
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
                                 }
                             });
 
@@ -202,9 +200,9 @@ public class Commands {
                                 @Override
                                 public void run() {
                                     String reason = sender.getName() + "加款" + amount;
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
                                     sender.sendMessage(Config.prefix() + "加款操作已执行，加款返回结果：" + PayApi.manual(targetPlayer, 1, amount, reason));
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
                                 }
                             });
                         } else {
@@ -227,9 +225,9 @@ public class Commands {
                                 public void run() {
 
                                     String reason = sender.getName() + "重设点券" + amount;
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
                                     sender.sendMessage(Config.prefix() + "重设点券操作已执行，重设点券返回结果：" + PayApi.manual(targetPlayer, 3, amount, reason));
-                                    sender.sendMessage("§b==============================================================");
+                                    sender.sendMessage("§b===================");
 
                                 }
                             });

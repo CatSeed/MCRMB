@@ -38,7 +38,7 @@ public class RetrievePlayerMoneyTask implements Runnable {
         }
 
         Optional<List<Object>> resultOptional = apiConnection.parseApiResponse(Mcrmb.API + "CheckMoney?sign=" + sign + "&sid=" + sid + "&wname=" + name + "&time=" + timeStamp);
-        sender.sendMessage("§b==============================================================");
+        sender.sendMessage("§b===================");
         if (resultOptional.isPresent()) {
             List<Object> result = resultOptional.get();
             if (result.get(0).equals("101")) {
@@ -54,7 +54,7 @@ public class RetrievePlayerMoneyTask implements Runnable {
 
         }
 
-        sender.sendMessage("§b==============================================================");
+        sender.sendMessage("§b===================");
     }
 }
 

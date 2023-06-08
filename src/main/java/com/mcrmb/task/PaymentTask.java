@@ -24,8 +24,8 @@ public class PaymentTask implements Runnable {
     @Override
     public void run() {
         boolean result = PayApi.pay(targetPlayerName, amount, reason, false);
-        sender.sendMessage("§b==============================================================");
+        sender.sendMessage("§b===================");
         sender.sendMessage(Config.prefix() + "接口方式消费操作已执行，扣除返回结果：" + result + "！");
-        sender.sendMessage("§b==============================================================");
+        sender.sendMessage("§b===================");
     }
 }
