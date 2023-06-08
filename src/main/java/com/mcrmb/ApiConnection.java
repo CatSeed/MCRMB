@@ -58,7 +58,7 @@ public class ApiConnection {
             List<Object> result = new ArrayList<>();
             result.add(jsonObject.get("code"));
             result.add(jsonObject.get("msg"));
-            result.add(jsonObject.getJSONArray("data"));
+            result.add(jsonObject.get("data"));
             return Optional.of(result);
 
         } else {

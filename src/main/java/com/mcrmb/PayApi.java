@@ -132,12 +132,16 @@ public class PayApi {
                     if (!result.get(0).equals("201") && !result.get(0).equals("101")) {
                         return false;
                     } else {
-                        if (transactionType == 1) {
-                            Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) + Integer.parseInt(amount)));
-                        } else if (transactionType == 2) {
-                            Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) - Integer.parseInt(amount)));
-                        } else {
-                            Mcrmb.balances.put(player, amount);
+                        switch (transactionType) {
+                            case 1:
+                                Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) + Integer.parseInt(amount)));
+                                break;
+                            case 2:
+                                Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) - Integer.parseInt(amount)));
+                                break;
+                            default:
+                                Mcrmb.balances.put(player, amount);
+                                break;
                         }
 
                         return true;
