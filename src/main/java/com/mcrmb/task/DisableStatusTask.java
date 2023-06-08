@@ -17,6 +17,7 @@ public class DisableStatusTask extends BukkitRunnable {
             String disableStatusUrl = Mcrmb.API + "Status?sid=" + Config.sid() + "&do=disable&pl=mcrmb&ver=" + Mcrmb.getInstance().getDescription().getVersion();
             // 发起API请求
             new ApiConnection().getApiResponse(disableStatusUrl);
+            Mcrmb.loggerInfo("插件已停止，感谢使用www.mcrmb.com");
         } catch (Exception ignored) {
             // 忽略异常，避免影响服务器正常运行
         }

@@ -1,12 +1,13 @@
 package com.mcrmb;
 
 import com.mcrmb.listener.BalanceRenewListener;
-import com.mcrmb.task.DisableStatusTask;
 import com.mcrmb.task.CardTypeFetcherTask;
+import com.mcrmb.task.DisableStatusTask;
 import com.mcrmb.util.json.JSONObject;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.text.MessageFormat;
@@ -46,9 +47,14 @@ public class Mcrmb extends JavaPlugin {
         getCardTypes();
         balances = new HashMap<>();
 
+        PluginManager pluginManager = getServer().getPluginManager();
+
         if (Config.renewOnJoin()) {
-            getServer().getPluginManager().registerEvents(new BalanceRenewListener(), this);
+            pluginManager.registerEvents(new BalanceRenewListener(), this);
             loggerInfo("玩家进服时查询余额：已开启");
+        } else if (Config.whitelist() > 0) {
+            pluginManager.registerEvents(new BalanceRenewListener(), this);
+            loggerInfo("白名单限制已开启，玩家必须有" + Config.whitelist() + "点券方能进服。");
         }
 
         if (Config.opModify()) {
@@ -57,24 +63,22 @@ public class Mcrmb extends JavaPlugin {
             loggerInfo("■■■■■■■■■■■■■■■■");
         }
 
-        if (Config.whitelist() > 0) {
-            if (!Config.renewOnJoin()) {
-                getServer().getPluginManager().registerEvents(new BalanceRenewListener(), this);
-            }
-            loggerInfo("白名单限制已开启，玩家必须有" + Config.whitelist() + "点券方能进服。");
-        }
 
+    }
+
+    @Override
+    public void onDisable() {
+        try {
+            new DisableStatusTask().runTaskAsynchronously(Mcrmb.getInstance());
+        } catch (Exception e) {
+            Mcrmb.loggerInfo("插件已停止，感谢使用www.mcrmb.com");
+        }
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Commands.execute(sender, label, args);
         return true;
-    }
-
-    @Override
-    public void onDisable() {
-        new DisableStatusTask().runTaskAsynchronously(this);
     }
 
     /**
