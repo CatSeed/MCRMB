@@ -70,6 +70,10 @@ public class PayApi {
         return 0;
     }
 
+    public static int allcharge(String player) {
+        return allCharge(player);
+    }
+
     /**
      * 查询指定玩家的总消费金额
      *
@@ -94,6 +98,10 @@ public class PayApi {
             }
         }
         return 0;
+    }
+
+    public static int allpay(String player) {
+        return allPay(player);
     }
 
     /**
@@ -142,13 +150,17 @@ public class PayApi {
         return false;
     }
 
+    public static boolean Manual(String player, int transactionType, String amount, String reason) {
+        return manual(player, transactionType, amount, reason);
+    }
+
     /**
      * 为指定玩家购买物品
      *
      * @param playerName 玩家用户名
-     * @param itemId 物品ID
-     * @param amount 购买数量
-     * @param broadcast 购买成功时是否全服公告
+     * @param itemId     物品ID
+     * @param amount     购买数量
+     * @param broadcast  购买成功时是否全服公告
      * @return 购买是否成功
      */
     public static boolean pay(String playerName, String amount, String itemId, boolean broadcast) {
@@ -220,6 +232,10 @@ public class PayApi {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static boolean Pay(String playerName, String amount, String itemId, boolean broadcast) {
+        return pay(playerName, amount, itemId, broadcast);
     }
 
 
