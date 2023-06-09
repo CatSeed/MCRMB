@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * 用于玩家进服时更新用户余额。
+ * 当配置文件中的 whitelist 大于0时，将会设置进入服务器的门槛，玩家需要确保他们的账户中有足够的点券余额
  */
 public class BalanceRenewTask implements Runnable {
 
