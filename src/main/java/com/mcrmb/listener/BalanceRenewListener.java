@@ -2,6 +2,7 @@ package com.mcrmb.listener;
 
 import com.mcrmb.task.BalanceRenewTask;
 import com.mcrmb.Mcrmb;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,7 +19,10 @@ public class BalanceRenewListener implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // 运行异步任务，传入当前监听器实例和事件对象
-        Mcrmb.runTaskAsync(new BalanceRenewTask(event));
+        Player player = event.getPlayer();
+        if (player != null) {
+            // 运行异步任务，传入当前监听器实例和事件对象
+            Mcrmb.runTaskAsync(new BalanceRenewTask(event));
+        }
     }
 }
