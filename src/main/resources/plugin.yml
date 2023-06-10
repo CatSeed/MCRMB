@@ -12,10 +12,10 @@ softdepend: [ ]
 commands:
   b:
     description: "用户指令，欢迎访问 https://www.mcrmb.com/"
-    usage: "<command> <命令>"
+    usage: "/<command> <命令>"
   badmin:
     description: "管理员指令，此指令已经改为 /b admin"
-    usage: "<command> <命令>"
+    usage: "/<command> <命令>"
 
 permissions:
   Mcrmb.admin:
