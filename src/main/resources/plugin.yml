@@ -1,11 +1,23 @@
 name: Mcrmb
 version: 1.1.0
+description: 该插件提供游戏内充值、查询点券余额等功能，并提供接口及事件支持开发者自行开发插件。
+authors: [ ]
+website: https://www.mcrmb.com/
+api-version: 1.13
+
 main: com.mcrmb.Mcrmb
+
 softdepend: [ ]
+
 commands:
   b:
-    description: "MCRMB插件，欢迎访问 http://www.mcrmb.com"
+    description: "用户指令，欢迎访问 https://www.mcrmb.com/"
     usage: "<command> <命令>"
   badmin:
-    description: "此指令已经改为 /b admin"
+    description: "管理员指令，此指令已经改为 /b admin"
     usage: "<command> <命令>"
+
+permissions:
+  Mcrmb.admin:
+    description: 管理员指令执行权限。
+    default: op
