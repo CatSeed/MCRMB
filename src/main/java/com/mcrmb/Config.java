@@ -53,14 +53,21 @@ public class Config {
         loadConfig();
     }
 
+    /**
+     * 存储SID和KEY到插件配置文件中
+     *
+     * @param sid 用户输入的SID
+     * @param key 用户输入的KEY
+     */
     public static void storeSidAndKey(String sid, String key) {
         Mcrmb mcrmb = Mcrmb.getInstance();
         FileConfiguration config = mcrmb.getConfig();
         Config.sid = sid;
         Config.key = key;
-        config.getString("sid", sid);
-        config.getString("key", key);
+        config.set("sid", sid);
+        config.set("key", key);
         mcrmb.saveConfig();
+        mcrmb.reloadConfig();
     }
 
     public static String sid() {
