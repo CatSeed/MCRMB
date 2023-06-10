@@ -21,7 +21,7 @@ public class BalanceRenewListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         if (player != null) {
-            // 运行异步任务，传入当前监听器实例和事件对象
+            // 运行异步任务，传入当前事件对象
             Mcrmb.runTaskAsync(new BalanceRenewTask(event));
         }
     }
