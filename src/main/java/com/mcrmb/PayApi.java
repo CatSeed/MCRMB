@@ -24,7 +24,6 @@ public class PayApi {
      * @return 玩家余额
      */
     public static int look(String player) {
-        Mcrmb.loggerInfo("跳过缓存强制刷新玩家 " + player + " 余额");
         ApiConnection.PlayerDataRequest playerDataReq = ApiConnection.PlayerDataRequest.newInstance(player);
         String name = playerDataReq.getName();
         String sign = playerDataReq.getSign();
@@ -37,8 +36,10 @@ public class PayApi {
             if (result.get(0).equals("101")) {
                 JSONArray resultArray = (JSONArray) result.get(2);
                 JSONObject resultObject = resultArray.getJSONObject(0);
-                Mcrmb.balances.put(player, resultObject.getString("money"));
-                return Integer.parseInt(resultObject.getString("money"));
+                String money = resultObject.getString("money");
+                Mcrmb.balances.put(player, money);
+                Mcrmb.loggerInfo("刷新玩家 " + player + " 余额为：" + money);
+                return Integer.parseInt(money);
             }
         }
         return 0;
@@ -119,11 +120,12 @@ public class PayApi {
             String timeStamp = DateUtil.getTimeStamp();
             String key = Config.key();
             String sid = Config.sid();
-            String sign = EncryptionUtil.encryptString(sid + player + transactionType + URLEncoder.encode(reason, "UTF-8") + amount + timeStamp + key);
+            String text = URLEncoder.encode(reason, "UTF-8");
+            String sign = EncryptionUtil.encryptString(sid + player + transactionType + text + amount + timeStamp + key);
             if (Config.logApi()) {
-                Mcrmb.loggerInfo("发起手动" + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + "请求:Pay?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + URLEncoder.encode(reason, "UTF-8") + "&money=" + amount + "&time=" + timeStamp);
+                Mcrmb.loggerInfo("发起手动" + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + "请求:Pay?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + amount + "&time=" + timeStamp);
             }
-            String apiUrl = Mcrmb.API + "Manual?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + URLEncoder.encode(reason, "UTF-8") + "&money=" + amount + "&time=" + timeStamp;
+            String apiUrl = Mcrmb.API + "Manual?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + amount + "&time=" + timeStamp;
             Optional<List<Object>> resultOptional = apiConnection.parseApiResponse(apiUrl);
             if (resultOptional.isPresent()) {
                 List<Object> result = resultOptional.get();
@@ -150,6 +152,7 @@ public class PayApi {
             }
         } catch (Exception e) {
             Mcrmb.loggerSevere("访问接口异常 " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }

@@ -52,6 +52,7 @@ public class ApiConnection {
         } catch (Exception e) {
             Mcrmb.loggerSevere("插件连接接口过程出现异常！");
             Mcrmb.loggerSevere("异常原因: " + e.getMessage());
+            e.printStackTrace();
         }
         if (response != null) {
             JSONObject jsonObject = new JSONObject(response);

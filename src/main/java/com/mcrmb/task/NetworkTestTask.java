@@ -29,6 +29,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a自定义测试【" + url + "】： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c自定义测试【" + url + "】： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
         } else {
             sender.sendMessage("§e网络测试中，共3个结果，请耐心等待。");
@@ -38,6 +39,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a测试连接百度： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c测试连接百度： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
             String sid = Config.sid();
 
@@ -46,6 +48,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a测试当前接口： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c测试当前接口： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
 
             try {
@@ -53,6 +56,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a测试旧接口： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c测试旧接口： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
 
             try {
@@ -60,6 +64,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a附加测试1： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c附加测试1： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
 
             try {
@@ -67,6 +72,7 @@ public class NetworkTestTask implements Runnable {
                 sender.sendMessage("§a附加测试2： 正常");
             } catch (Exception e) {
                 sender.sendMessage("§c附加测试2： 异常 " + e.getMessage());
+                e.printStackTrace();
             }
 
             sender.sendMessage("§e测试结束，请截图发给Mcrmb技术，谢谢支持！");

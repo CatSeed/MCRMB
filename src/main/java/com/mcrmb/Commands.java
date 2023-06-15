@@ -30,6 +30,7 @@ public class Commands {
                 } catch (Exception e) {
                     sender.sendMessage(Config.prefix() + "§c操作失败，请联系服主！");
                     Mcrmb.loggerSevere("访问接口异常 " + e.getMessage());
+                    e.printStackTrace();
                 }
                 return;
             }
@@ -42,6 +43,7 @@ public class Commands {
                 } catch (Exception e) {
                     sender.sendMessage(Config.prefix() + "§c操作失败，请联系服主！");
                     Mcrmb.loggerSevere("访问接口异常 " + e.getMessage());
+                    e.printStackTrace();
                 }
                 return;
             }
@@ -83,6 +85,7 @@ public class Commands {
                 } catch (Exception e) {
                     sender.sendMessage(Config.prefix() + "§c操作失败，请联系服主！");
                     Mcrmb.loggerSevere("访问接口异常 " + e.getMessage());
+                    e.printStackTrace();
                 }
                 return;
             }
@@ -96,6 +99,7 @@ public class Commands {
                 } catch (Exception e) {
                     sender.sendMessage(Config.prefix() + "§c操作失败，请联系服主！");
                     Mcrmb.loggerSevere("访问接口异常 " + e.getMessage());
+                    e.printStackTrace();
                 }
                 return;
             }
@@ -144,6 +148,7 @@ public class Commands {
                     } catch (Exception e) {
                         sender.sendMessage(Config.prefix() + "操作失败，建议您联系服主咨询！");
                         Mcrmb.loggerInfo("访问接口异常 " + e.getMessage());
+                        e.printStackTrace();
                     }
                     return;
                 }
