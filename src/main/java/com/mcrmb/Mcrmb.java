@@ -25,7 +25,33 @@ public class Mcrmb extends JavaPlugin {
     public static JSONObject cardInfoJson;
     public static Set<String> cardNames;
     public static String czHelp;
-    public static Map<String, String> balances;
+
+    @Deprecated
+    public static Map<String, String> balances = new HashMap<>();
+
+    /**
+     * 获取特定玩家的余额信息。
+     *
+     * @param playerName 玩家名称
+     * @return 玩家余额，如果不存在则为0
+     */
+    public static String getPlayerBalance(String playerName) {
+        playerName = playerName.toLowerCase();
+        String result = balances.get(playerName);
+        return result == null ? "0" : result;
+    }
+
+    /**
+     * 更新或设置特定玩家的余额信息。
+     *
+     * @param playerName 玩家名称
+     * @param money      余额
+     */
+    public static void setPlayerBalance(String playerName, String money) {
+        playerName = playerName.toLowerCase();
+        balances.put(playerName, money);
+
+    }
 
     public static Mcrmb getInstance() {
         return instance;
@@ -44,7 +70,6 @@ public class Mcrmb extends JavaPlugin {
         }
 
         getCardTypes();
-        balances = new HashMap<>();
 
         PluginManager pluginManager = getServer().getPluginManager();
 

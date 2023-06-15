@@ -37,7 +37,7 @@ public class PayApi {
                 JSONArray resultArray = (JSONArray) result.get(2);
                 JSONObject resultObject = resultArray.getJSONObject(0);
                 String money = resultObject.getString("money");
-                Mcrmb.balances.put(player, money);
+                Mcrmb.setPlayerBalance(player, money);
                 Mcrmb.loggerInfo("刷新玩家 " + player + " 余额为：" + money);
                 return Integer.parseInt(money);
             }
@@ -64,7 +64,7 @@ public class PayApi {
             if (result.get(0).equals("101")) {
                 JSONArray resultArray = (JSONArray) result.get(2);
                 JSONObject resultObject = resultArray.getJSONObject(0);
-                Mcrmb.balances.put(player, resultObject.getString("money"));
+                Mcrmb.setPlayerBalance(player, resultObject.getString("money"));
                 return Integer.parseInt(resultObject.getString("allcharge"));
             }
         }
@@ -94,7 +94,7 @@ public class PayApi {
             if (result.get(0).equals("101")) {
                 JSONArray resultArray = (JSONArray) result.get(2);
                 JSONObject resultObject = resultArray.getJSONObject(0);
-                Mcrmb.balances.put(player, resultObject.getString("money"));
+                Mcrmb.setPlayerBalance(player, resultObject.getString("money"));
                 return Integer.parseInt(resultObject.getString("allpay"));
             }
         }
@@ -110,39 +110,41 @@ public class PayApi {
      *
      * @param player          玩家用户名
      * @param transactionType 操作类型：1表示加款，2表示扣款，3表示重设
-     * @param amount          操作金额，加款和扣款为正负数，重设为新的余额
+     * @param money           操作金额，加款和扣款为正负数，重设为新的余额
      * @param reason          操作原因，会记录在操作日志中
      * @return 操作是否成功
      */
-    public static boolean manual(String player, int transactionType, String amount, String reason) {
+    public static boolean manual(String player, int transactionType, String money, String reason) {
         try {
             player = player.toLowerCase();
             String timeStamp = DateUtil.getTimeStamp();
             String key = Config.key();
             String sid = Config.sid();
             String text = URLEncoder.encode(reason, "UTF-8");
-            String sign = EncryptionUtil.encryptString(sid + player + transactionType + text + amount + timeStamp + key);
+            String sign = EncryptionUtil.encryptString(sid + player + transactionType + text + money + timeStamp + key);
             if (Config.logApi()) {
-                Mcrmb.loggerInfo("发起手动" + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + "请求:Pay?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + amount + "&time=" + timeStamp);
+                Mcrmb.loggerInfo("发起手动" + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + "请求:Pay?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + money + "&time=" + timeStamp);
             }
-            String apiUrl = Mcrmb.API + "Manual?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + amount + "&time=" + timeStamp;
+            String apiUrl = Mcrmb.API + "Manual?sign=" + sign + "&sid=" + sid + "&wname=" + player + "&type=" + transactionType + "&text=" + text + "&money=" + money + "&time=" + timeStamp;
             Optional<List<Object>> resultOptional = apiConnection.parseApiResponse(apiUrl);
             if (resultOptional.isPresent()) {
                 List<Object> result = resultOptional.get();
                 if (result.get(0) != null) {
-                    Mcrmb.loggerInfo("加款扣款接口： 为玩家 " + player + " " + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + amount + Config.point() + ", 原因: " + reason + ", 处理结果: " + result.get(1));
+                    Mcrmb.loggerInfo("加款扣款接口： 为玩家 " + player + " " + (transactionType == 3 ? "重设点券余额" : (transactionType == 1 ? "加款" : "扣款")) + money + Config.point() + ", 原因: " + reason + ", 处理结果: " + result.get(1));
                     if (!result.get(0).equals("201") && !result.get(0).equals("101")) {
                         return false;
                     } else {
+                        int iBalances = Integer.parseInt(Mcrmb.getPlayerBalance(player));
+                        int iMoney = Integer.parseInt(money);
                         switch (transactionType) {
                             case 1:
-                                Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) + Integer.parseInt(amount)));
+                                Mcrmb.setPlayerBalance(player, String.valueOf(iBalances + iMoney));
                                 break;
                             case 2:
-                                Mcrmb.balances.put(player, String.valueOf(Integer.parseInt(Mcrmb.balances.get(player)) - Integer.parseInt(amount)));
+                                Mcrmb.setPlayerBalance(player, String.valueOf(iBalances - iMoney));
                                 break;
                             default:
-                                Mcrmb.balances.put(player, amount);
+                                Mcrmb.setPlayerBalance(player, money);
                                 break;
                         }
 
@@ -197,7 +199,7 @@ public class PayApi {
 
                     JSONObject resultObject = ((JSONArray) result.get(2)).getJSONObject(0);
                     String money = resultObject.getString("money") + Config.point();
-                    Mcrmb.balances.put(playerName, money);
+                    Mcrmb.setPlayerBalance(playerName, money);
 
                     String message = Config.prefix() + "您成功消费了" + amount + Config.point() + "用于" + itemId + ",您的余额为" + money;
                     if (player != null) {

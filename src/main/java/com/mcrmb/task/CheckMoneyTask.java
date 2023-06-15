@@ -50,7 +50,7 @@ public class CheckMoneyTask implements Runnable {
                 JSONArray infoArray = (JSONArray) result.get(2);
                 JSONObject infoObject = infoArray.getJSONObject(0);
                 sender.sendMessage(Config.prefix() + "玩家: " + name + "\n" + Config.prefix() + "您的余额: " + infoObject.get("money") + Config.point() + "\n" + Config.prefix() + "历史消费: " + infoObject.get("allpay") + Config.point() + "\n" + Config.prefix() + "历史充值: " + infoObject.get("allcharge") + Config.point());
-                Mcrmb.balances.put(name, infoObject.get("money").toString());
+                Mcrmb.setPlayerBalance(name, infoObject.get("money").toString());
             } else if (result.get(0).equals("102")) {
                 sender.sendMessage(Config.prefix() + "您尚未开户,请提交充值卡以便自动开户!");
             }

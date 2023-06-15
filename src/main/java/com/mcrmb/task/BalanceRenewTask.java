@@ -44,13 +44,13 @@ public class BalanceRenewTask implements Runnable {
             if (result.get(0).equals("101")) {
                 JsonArray data = (JsonArray) result.get(2);
                 JsonObject moneyJsonObject = data.get(0).getAsJsonObject();
-                Mcrmb.balances.put(playerName, moneyJsonObject.get("money").getAsString());
+                Mcrmb.setPlayerBalance(playerName, moneyJsonObject.get("money").getAsString());
             }
 
         }
 
         int requiredBalance = Config.whitelist();
-        float currentBalance = Float.parseFloat(Mcrmb.balances.get(playerName));
+        float currentBalance = Float.parseFloat(Mcrmb.getPlayerBalance(playerName));
         if (requiredBalance > 0 && currentBalance - requiredBalance < 0.0F) {
             String kickMessage = "§b很抱歉，本服务器要求您的点券余额有 %d 以上方能加入，您当前的点券余额为 %.2f，请到 http://www.mcrmb.com/%d 进行充值后再加入服务器~";
             event.getPlayer().kickPlayer(MessageFormat.format(kickMessage, requiredBalance, currentBalance, sid));
